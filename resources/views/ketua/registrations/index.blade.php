@@ -1,0 +1,53 @@
+<x-app-layout>
+    <x-slot name="header">
+        <div>
+            <p class="ui-section-title">Pendaftaran</p>
+            <h1 class="font-display text-2xl font-semibold text-teal-950">Antrian santri baru</h1>
+        </div>
+    </x-slot>
+
+    <div class="w-full max-w-4xl space-y-6">
+        <section class="space-y-3">
+            <h2 class="ui-section-title">Menunggu ({{ $pending->count() }})</h2>
+            <div class="max-h-64 space-y-3 overflow-y-auto pr-1">
+            @forelse ($pending as $item)
+                <a href="{{ route('ketua.registrations.show', $item) }}" class="ui-card flex items-center gap-3 p-4 sm:gap-4">
+                    @if ($item->photoUrl())
+                        <img src="{{ $item->photoUrl() }}" alt="" class="h-14 w-14 rounded-2xl object-cover">
+                    @else
+                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-teal-50 text-teal-800 font-semibold">
+                            {{ mb_substr($item->name, 0, 1) }}
+                        </div>
+                    @endif
+                    <div class="min-w-0 flex-1">
+                        <p class="truncate font-semibold text-teal-950">{{ $item->name }}</p>
+                        <p class="text-sm text-slate-500">{{ $item->track->label() }} · {{ $item->school_level->label() }} · {{ $item->parent_name }}</p>
+                    </div>
+                    <x-badge tone="warn" class="shrink-0">Menunggu</x-badge>
+                </a>
+            @empty
+                <x-empty>Tidak ada pendaftaran menunggu.</x-empty>
+            @endforelse
+            </div>
+        </section>
+
+        @if ($recent->isNotEmpty())
+            <section class="space-y-3">
+                <h2 class="ui-section-title">Baru diproses</h2>
+                <div class="max-h-64 space-y-3 overflow-y-auto pr-1">
+                    @foreach ($recent as $item)
+                        <div class="ui-card flex items-center justify-between gap-3 p-4">
+                            <div>
+                                <p class="font-medium text-teal-950">{{ $item->name }}</p>
+                                <p class="text-xs text-slate-500">{{ $item->reviewed_at?->format('d/m/Y H:i') }}</p>
+                            </div>
+                            <x-badge :tone="$item->status === \App\Enums\RegistrationStatus::Approved ? 'ok' : 'danger'">
+                                {{ $item->status->label() }}
+                            </x-badge>
+                        </div>
+                    @endforeach
+                </div>
+            </section>
+        @endif
+    </div>
+</x-app-layout>
