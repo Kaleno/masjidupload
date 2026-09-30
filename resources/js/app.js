@@ -1,6 +1,9 @@
 
 
+import * as Turbo from '@hotwired/turbo';
 import Alpine from 'alpinejs';
+
+Turbo.config.drive.progressBarDelay = 150;
 
 window.Alpine = Alpine;
 

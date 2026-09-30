@@ -12,6 +12,7 @@ use App\Support\Role;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -31,6 +32,9 @@ class AppServiceProvider extends ServiceProvider
         }
 
         Paginator::useTailwind();
+
+        Vite::useScriptTagAttributes(['data-turbo-track' => 'reload']);
+        Vite::useStyleTagAttributes(['data-turbo-track' => 'reload']);
 
         Gate::define('manage-master', fn (User $user) => $user->hasRole(Role::Ketua));
         Gate::define('manage-holidays', fn (User $user) => $user->hasAnyRole([Role::Ketua, Role::KetuaPengajar]));

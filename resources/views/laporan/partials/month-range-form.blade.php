@@ -26,7 +26,7 @@
     <p class="text-xs text-slate-500">Maksimal {{ \App\Support\MonthRange::MaxMonths }} bulan sekali tampil.</p>
     <div class="grid gap-2 sm:grid-cols-2">
         <button type="submit" class="btn-secondary">Tampilkan</button>
-        <a href="{{ route($downloadRoute, $range->query()) }}" class="btn-primary">
+        <a href="{{ route($downloadRoute, $range->query()) }}" class="btn-primary" data-turbo="false">
             <x-icon name="arrow-right" class="h-4 w-4 rotate-90" />
             Download Excel
         </a>

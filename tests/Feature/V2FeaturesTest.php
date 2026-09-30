@@ -301,6 +301,18 @@ class V2FeaturesTest extends TestCase
         }
     }
 
+    public function test_pages_navigate_with_turbo_and_excel_downloads_bypass_it(): void
+    {
+        $this->get(route('login'))
+            ->assertOk()
+            ->assertSee('<meta name="turbo-cache-control" content="no-cache">', false);
+
+        $this->as($this->ketua)->get(route('laporan.spp.index'))
+            ->assertOk()
+            ->assertSee('<meta name="view-transition" content="same-origin">', false)
+            ->assertSee('class="btn-primary" data-turbo="false"', false);
+    }
+
     private function as(User $user): static
     {
         $user->forceFill(['session_date' => now()->toDateString()])->save();

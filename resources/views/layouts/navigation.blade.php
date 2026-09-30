@@ -76,7 +76,7 @@
     $initials = collect(explode(' ', $user->name))->map(fn ($part) => mb_substr($part, 0, 1))->take(2)->implode('');
 @endphp
 
-<aside class="hidden lg:flex lg:h-full lg:w-72 lg:shrink-0 lg:flex-col bg-teal-950 text-teal-50">
+<aside class="app-sidebar hidden lg:flex lg:h-full lg:w-72 lg:shrink-0 lg:flex-col bg-teal-950 text-teal-50">
     <div class="px-6 py-6 flex items-center gap-3">
         <x-application-logo class="h-12 w-12 shrink-0" />
         <div class="min-w-0">
@@ -119,7 +119,7 @@
     </div>
 </aside>
 
-<div class="fixed inset-x-0 top-0 z-30 px-3 pt-[max(0.75rem,env(safe-area-inset-top))] lg:hidden">
+<div class="app-topbar fixed inset-x-0 top-0 z-30 px-3 pt-[max(0.75rem,env(safe-area-inset-top))] lg:hidden">
     <div class="flex items-center gap-2.5 rounded-2xl bg-teal-950/95 px-3 py-2.5 text-white shadow-lift backdrop-blur">
         <x-application-logo class="h-10 w-10 shrink-0" />
         <div class="min-w-0">
@@ -129,17 +129,17 @@
     </div>
 </div>
 
-<nav class="lg:hidden fixed bottom-0 inset-x-0 z-30 border-t border-teal-950/5 bg-white/95 backdrop-blur-md" style="padding-bottom: env(safe-area-inset-bottom)">
+<nav class="app-tabbar lg:hidden fixed bottom-0 inset-x-0 z-30 border-t border-teal-950/5 bg-white/95 backdrop-blur-md" style="padding-bottom: env(safe-area-inset-bottom)">
     <div class="grid {{ $mobileGrid }}">
         @foreach ($primaryLinks->take(3) as $link)
             <a href="{{ route($link['route']) }}"
-               class="flex flex-col items-center justify-center gap-1 py-2.5 text-[11px] {{ request()->routeIs($link['match']) ? 'text-teal-800 font-semibold' : 'text-slate-500' }}">
+               class="ui-tap flex flex-col items-center justify-center gap-1 py-2.5 text-[11px] {{ request()->routeIs($link['match']) ? 'text-teal-800 font-semibold' : 'text-slate-500' }}">
                 <x-icon :name="$link['icon']" class="h-5 w-5" />
                 {{ $link['label'] }}
             </a>
         @endforeach
         <button type="button" @click="menuOpen = true"
-                class="flex flex-col items-center justify-center gap-1 py-2.5 text-[11px] {{ $moreActive ? 'text-teal-800 font-semibold' : 'text-slate-500' }}">
+                class="ui-tap flex flex-col items-center justify-center gap-1 py-2.5 text-[11px] {{ $moreActive ? 'text-teal-800 font-semibold' : 'text-slate-500' }}">
             <x-icon name="dots" class="h-5 w-5" />
             Menu
         </button>
@@ -171,7 +171,7 @@
                     <div class="grid grid-cols-2 gap-2">
                         @foreach ($items as $link)
                             <a href="{{ route($link['route']) }}"
-                               class="flex items-center gap-2 rounded-2xl border px-3 py-3 text-sm font-medium {{ request()->routeIs($link['match']) ? 'border-teal-700 bg-teal-800 text-white' : 'border-slate-200 bg-white text-slate-700' }}">
+                               class="ui-tap flex items-center gap-2 rounded-2xl border px-3 py-3 text-sm font-medium {{ request()->routeIs($link['match']) ? 'border-teal-700 bg-teal-800 text-white' : 'border-slate-200 bg-white text-slate-700' }}">
                                 <x-icon :name="$link['icon']" class="h-4 w-4 shrink-0" />
                                 {{ $link['label'] }}
                             </a>
@@ -183,7 +183,7 @@
                 <p class="mb-2 px-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">Akun</p>
                 <div class="grid grid-cols-2 gap-2">
                     <a href="{{ route('profile.edit') }}"
-                       class="flex items-center gap-2 rounded-2xl border px-3 py-3 text-sm font-medium {{ request()->routeIs('profile.*') ? 'border-teal-700 bg-teal-800 text-white' : 'border-slate-200 bg-white text-slate-700' }}">
+                       class="ui-tap flex items-center gap-2 rounded-2xl border px-3 py-3 text-sm font-medium {{ request()->routeIs('profile.*') ? 'border-teal-700 bg-teal-800 text-white' : 'border-slate-200 bg-white text-slate-700' }}">
                         <x-icon name="user" class="h-4 w-4 shrink-0" />
                         Profil
                     </a>

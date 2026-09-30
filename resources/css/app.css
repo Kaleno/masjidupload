@@ -4,6 +4,20 @@
 
 [x-cloak] { display: none !important; }
 
+html .turbo-progress-bar {
+    height: 3px;
+    background-color: #dbb86d;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 150ms;
+}
+
+.app-sidebar { view-transition-name: app-sidebar; }
+.app-topbar { view-transition-name: app-topbar; }
+.app-tabbar { view-transition-name: app-tabbar; }
+
 @layer base {
     html {
         scrollbar-gutter: stable;
@@ -39,11 +53,24 @@
     }
 
     .btn {
-        @apply inline-flex items-center justify-center gap-2 min-h-11 px-4 rounded-xl text-sm font-semibold transition duration-150 ease-out disabled:opacity-50 disabled:pointer-events-none;
+        @apply inline-flex items-center justify-center gap-2 min-h-11 px-4 rounded-xl text-sm font-semibold transition duration-150 ease-out active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none;
     }
 
     .btn-primary {
-        @apply btn bg-teal-800 text-white shadow-glow hover:bg-teal-900 active:scale-[0.98];
+        @apply btn bg-teal-800 text-white shadow-glow hover:bg-teal-900;
+    }
+
+    .ui-tap,
+    a.ui-card {
+        -webkit-touch-callout: none;
+        transition-property: transform, background-color, color, box-shadow;
+        transition-duration: 120ms;
+        transition-timing-function: ease-out;
+    }
+
+    .ui-tap:active,
+    a.ui-card:active {
+        transform: scale(0.96);
     }
 
     .btn-secondary {
@@ -302,7 +329,7 @@
     }
 
     .nav-item {
-        @apply flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition duration-150;
+        @apply flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition duration-150 active:scale-[0.97];
     }
 
     .nav-item-active {
