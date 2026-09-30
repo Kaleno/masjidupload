@@ -91,7 +91,7 @@
                 <p class="px-3 mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-teal-200/50">{{ $group }}</p>
                 <div class="space-y-1">
                     @foreach ($items as $link)
-                        <x-sidebar-link :href="route($link['route'])" :active="request()->routeIs($link['match'])">
+                        <x-sidebar-link :href="route($link['route'])" :active="request()->routeIs($link['match'])" :data-nav-key="$link['route']">
                             <x-icon :name="$link['icon']" class="h-5 w-5 shrink-0 opacity-80" />
                             <span>{{ $link['label'] }}</span>
                         </x-sidebar-link>
@@ -121,7 +121,13 @@
 
 <div class="app-topbar fixed inset-x-0 top-0 z-30 px-3 pt-[max(0.75rem,env(safe-area-inset-top))] lg:hidden">
     <div class="flex items-center gap-2.5 rounded-2xl bg-teal-950/95 px-3 py-2.5 text-white shadow-lift backdrop-blur">
-        <x-application-logo class="h-10 w-10 shrink-0" />
+        @if (! empty($back))
+            <a href="{{ $back }}" class="ui-tap flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 text-white hover:bg-white/15" aria-label="Kembali" data-back-link>
+                <x-icon name="arrow-left" class="h-5 w-5" />
+            </a>
+        @else
+            <x-application-logo class="h-10 w-10 shrink-0" />
+        @endif
         <div class="min-w-0">
             <p class="text-sm font-semibold truncate">{{ config('app.name') }}</p>
             <p class="text-[11px] text-teal-100/80 truncate">{{ $user->name }}</p>
@@ -133,12 +139,17 @@
     <div class="grid {{ $mobileGrid }}">
         @foreach ($primaryLinks->take(3) as $link)
             <a href="{{ route($link['route']) }}"
+               data-nav-key="{{ $link['route'] }}" data-nav-tab
+               data-nav-active="text-teal-800 font-semibold" data-nav-idle="text-slate-500"
+               @if (request()->routeIs($link['match'])) aria-current="page" @endif
                class="ui-tap flex flex-col items-center justify-center gap-1 py-2.5 text-[11px] {{ request()->routeIs($link['match']) ? 'text-teal-800 font-semibold' : 'text-slate-500' }}">
                 <x-icon :name="$link['icon']" class="h-5 w-5" />
                 {{ $link['label'] }}
             </a>
         @endforeach
-        <button type="button" @click="menuOpen = true"
+        <button type="button" @click="menuOpen = true" data-nav-more
+                data-nav-active="text-teal-800 font-semibold" data-nav-idle="text-slate-500"
+                aria-haspopup="dialog" :aria-expanded="menuOpen.toString()"
                 class="ui-tap flex flex-col items-center justify-center gap-1 py-2.5 text-[11px] {{ $moreActive ? 'text-teal-800 font-semibold' : 'text-slate-500' }}">
             <x-icon name="dots" class="h-5 w-5" />
             Menu
@@ -146,7 +157,9 @@
     </div>
 </nav>
 
-<div x-show="menuOpen" x-cloak class="lg:hidden fixed inset-0 z-40" style="display: none;">
+<div x-show="menuOpen" x-dialog="menuOpen" @dialog-back="menuOpen = false" @keydown.escape.window="menuOpen = false" x-cloak
+     class="lg:hidden fixed inset-0 z-40" style="display: none;"
+     role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title">
     <div class="absolute inset-0 bg-teal-950/40" @click="menuOpen = false"></div>
     <div class="absolute inset-x-0 bottom-0 rounded-t-3xl bg-cream-50 p-5 shadow-lift"
          x-show="menuOpen"
@@ -157,7 +170,7 @@
          x-transition:leave-start="translate-y-0"
          x-transition:leave-end="translate-y-full">
         <div class="mx-auto mb-4 h-1.5 w-12 rounded-full bg-slate-300"></div>
-        <p class="font-display text-lg text-teal-950">Menu</p>
+        <p id="mobile-menu-title" class="font-display text-lg text-teal-950">Menu</p>
         <p class="text-sm text-slate-500 mb-4">
             {{ $user->name }}
             @if ($roleName && \App\Support\Role::label($roleName) !== $user->name)
@@ -167,10 +180,13 @@
         <div class="max-h-[60vh] space-y-4 overflow-y-auto pr-1">
             @foreach ($grouped as $group => $items)
                 <div>
-                    <p class="mb-2 px-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">{{ $group }}</p>
+                    <p class="mb-2 px-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">{{ $group }}</p>
                     <div class="grid grid-cols-2 gap-2">
                         @foreach ($items as $link)
                             <a href="{{ route($link['route']) }}"
+                               data-nav-key="{{ $link['route'] }}"
+                               data-nav-active="border-teal-700 bg-teal-800 text-white" data-nav-idle="border-slate-200 bg-white text-slate-700"
+                               @if (request()->routeIs($link['match'])) aria-current="page" @endif
                                class="ui-tap flex items-center gap-2 rounded-2xl border px-3 py-3 text-sm font-medium {{ request()->routeIs($link['match']) ? 'border-teal-700 bg-teal-800 text-white' : 'border-slate-200 bg-white text-slate-700' }}">
                                 <x-icon :name="$link['icon']" class="h-4 w-4 shrink-0" />
                                 {{ $link['label'] }}
@@ -180,9 +196,11 @@
                 </div>
             @endforeach
             <div>
-                <p class="mb-2 px-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">Akun</p>
+                <p class="mb-2 px-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">Akun</p>
                 <div class="grid grid-cols-2 gap-2">
                     <a href="{{ route('profile.edit') }}"
+                       data-nav-key="profile.edit"
+                       data-nav-active="border-teal-700 bg-teal-800 text-white" data-nav-idle="border-slate-200 bg-white text-slate-700"
                        class="ui-tap flex items-center gap-2 rounded-2xl border px-3 py-3 text-sm font-medium {{ request()->routeIs('profile.*') ? 'border-teal-700 bg-teal-800 text-white' : 'border-slate-200 bg-white text-slate-700' }}">
                         <x-icon name="user" class="h-4 w-4 shrink-0" />
                         Profil

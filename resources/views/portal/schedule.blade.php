@@ -61,13 +61,15 @@
             <span>Klik tanggal untuk lihat pengajar.</span>
         </div>
 
-        <div x-show="selected !== null" x-cloak class="fixed inset-0 z-50 flex items-end justify-center sm:items-center" style="display: none;">
+        <div x-show="selected !== null" x-dialog="selected !== null" @dialog-back="selected = null" x-cloak
+             class="fixed inset-0 z-50 flex items-end justify-center sm:items-center" style="display: none;"
+             role="dialog" aria-modal="true" aria-labelledby="schedule-day-title">
             <div class="absolute inset-0 bg-teal-950/40" @click="selected = null"></div>
             <template x-if="selected !== null">
                 <div class="relative max-h-[85vh] w-full max-w-md overflow-y-auto rounded-t-3xl bg-cream-50 p-5 shadow-lift sm:rounded-3xl">
                     <div class="flex items-start justify-between gap-3">
                         <div>
-                            <p class="font-display text-lg font-semibold text-teal-950" x-text="day.label"></p>
+                            <p id="schedule-day-title" class="font-display text-lg font-semibold text-teal-950" x-text="day.label"></p>
                             <p class="text-sm font-semibold text-rose-600" x-show="day.off" x-text="'Libur · ' + day.holiday"></p>
                         </div>
                         <button type="button" class="btn-ghost min-h-9 px-3" @click="selected = null" aria-label="Tutup">✕</button>
@@ -92,7 +94,7 @@
                                         <a :href="teacher.wa" target="_blank" rel="noopener" class="btn-primary min-h-9 shrink-0 px-3 text-xs">Hubungi</a>
                                     </template>
                                     <template x-if="! teacher.wa">
-                                        <span class="shrink-0 text-xs text-slate-400">Kontak belum ada</span>
+                                        <span class="shrink-0 text-xs text-slate-500">Kontak belum ada</span>
                                     </template>
                                 </div>
                             </template>

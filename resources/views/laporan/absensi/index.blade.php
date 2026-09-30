@@ -45,7 +45,7 @@
                                         @foreach ($month['days'] as $day)
                                             <th class="px-1.5 text-center {{ $day['holiday'] ? 'text-rose-700' : '' }}" title="{{ $day['holiday'] }}">
                                                 <span class="block">{{ $day['day'] }}</span>
-                                                <span class="block font-normal text-slate-400">{{ $day['weekday'] }}</span>
+                                                <span class="block font-normal text-slate-500">{{ $day['weekday'] }}</span>
                                             </th>
                                         @endforeach
                                         @foreach (['H', 'I', 'S', 'A'] as $label)

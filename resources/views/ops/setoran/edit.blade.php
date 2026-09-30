@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :back="route('ops.setoran.index')">
     <x-slot name="header">
         <div>
             <p class="ui-section-title">Setoran</p>

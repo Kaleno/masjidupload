@@ -23,8 +23,8 @@ class SecurityHeaders
             "frame-ancestors 'self'",
             "object-src 'none'",
             "img-src 'self' data: blob:",
-            "font-src 'self' https://fonts.bunny.net data:",
-            "style-src 'self' 'unsafe-inline' https://fonts.bunny.net",
+            "font-src 'self' data:",
+            "style-src 'self' 'unsafe-inline'",
             "script-src 'self' 'unsafe-eval'",
             "connect-src 'self'",
         ]));

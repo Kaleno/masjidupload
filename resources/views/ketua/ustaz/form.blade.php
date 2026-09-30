@@ -4,7 +4,7 @@
     $currentRole = old('teaching_role', $ustaz?->getRoleNames()->first() ?? \App\Support\Role::Pengajar);
 @endphp
 
-<x-app-layout>
+<x-app-layout :back="route('ketua.ustaz.index')">
     <x-slot name="header">
         <div>
             <p class="ui-section-title">Pengajar</p>

@@ -16,6 +16,7 @@ use App\Models\QuranSurah;
 use App\Models\SantriProfile;
 use App\Models\User;
 use App\Services\AuditLogger;
+use App\Services\OperationalDashboard;
 use App\Support\DateQuery;
 use App\Support\OperationalAccess;
 use App\Support\QuranCatalog;
@@ -29,6 +30,7 @@ class SetoranController extends Controller
 {
     public function __construct(
         private OperationalAccess $access,
+        private OperationalDashboard $dashboard,
     ) {}
 
     public function index(Request $request): View
@@ -267,9 +269,14 @@ class SetoranController extends Controller
             : collect();
 
         $santriIds = $members->pluck('id');
+        $setoranDate = $session?->session_date?->toDateString() ?? now()->toDateString();
 
         return [
             'members' => $members,
+            'pendingSantriIds' => $setoran
+                ? []
+                : $this->dashboard->santriIdsWithoutSetoran($santriIds, $setoranDate)->all(),
+            'isSessionToday' => $setoranDate === now()->toDateString(),
             'surahs' => $allSurahs,
             'juz30Surahs' => $juz30Surahs,
             'surahPickerItems' => QuranCatalog::surahPickerItems($allSurahs, withJuz: true),

@@ -237,10 +237,12 @@ class OperationalDashboard
     }
 
     /**
+     * Santri from the given list who have no setoran on the given date.
+     *
      * @param  Collection<int, int>  $santriIds
-     * @return Collection<int, SantriProfile>
+     * @return Collection<int, int>
      */
-    private function pendingSetoran(Collection $santriIds, string $today): Collection
+    public function santriIdsWithoutSetoran(Collection $santriIds, string $date): Collection
     {
         if ($santriIds->isEmpty()) {
             return collect();
@@ -248,10 +250,23 @@ class OperationalDashboard
 
         $doneIds = HafalanSetoran::query()
             ->whereIn('santri_id', $santriIds)
-            ->whereDate('setoran_date', $today)
-            ->pluck('santri_id');
+            ->whereDate('setoran_date', $date)
+            ->pluck('santri_id')
+            ->map(fn ($id): int => (int) $id);
 
-        $pendingIds = $santriIds->diff($doneIds)->values();
+        return $santriIds
+            ->map(fn ($id): int => (int) $id)
+            ->diff($doneIds)
+            ->values();
+    }
+
+    /**
+     * @param  Collection<int, int>  $santriIds
+     * @return Collection<int, SantriProfile>
+     */
+    private function pendingSetoran(Collection $santriIds, string $today): Collection
+    {
+        $pendingIds = $this->santriIdsWithoutSetoran($santriIds, $today);
         if ($pendingIds->isEmpty()) {
             return collect();
         }

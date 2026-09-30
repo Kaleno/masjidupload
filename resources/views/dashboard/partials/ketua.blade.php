@@ -18,7 +18,7 @@
                 </p>
                 <p class="text-sm text-slate-500">Absensi hari ini</p>
                 @if ($overview['attendanceRecorded'] ?? false)
-                    <p class="mt-1 text-xs text-slate-400">{{ $overview['stats']['hadirHariIni'] }} hadir · {{ $overview['stats']['alfaHariIni'] }} alfa</p>
+                    <p class="mt-1 text-xs text-slate-500">{{ $overview['stats']['hadirHariIni'] }} hadir · {{ $overview['stats']['alfaHariIni'] }} alfa</p>
                 @endif
             </a>
             <a href="{{ route('ops.setoran.index') }}" class="stat-card block">
@@ -53,12 +53,12 @@
         <div class="stat-card">
             <p class="font-display text-3xl font-semibold text-teal-950">{{ $santriCensus['perempuan'] }}</p>
             <p class="text-sm text-slate-500">Perempuan</p>
-            <p class="mt-1 text-xs text-slate-400">Dari santri aktif</p>
+            <p class="mt-1 text-xs text-slate-500">Dari santri aktif</p>
         </div>
         <div class="stat-card">
             <p class="font-display text-3xl font-semibold text-teal-950">{{ $santriCensus['lakiLaki'] }}</p>
             <p class="text-sm text-slate-500">Laki-laki</p>
-            <p class="mt-1 text-xs text-slate-400">Dari santri aktif</p>
+            <p class="mt-1 text-xs text-slate-500">Dari santri aktif</p>
         </div>
         <a href="{{ route('ketua.santri.index', ['status' => 'lulus']) }}" class="stat-card block">
             <p class="font-display text-3xl font-semibold text-teal-950">{{ $santriCensus['lulus'] }}</p>

@@ -29,7 +29,7 @@
                     <x-text-input x-model="note" placeholder="Catatan untuk santri (opsional)" maxlength="255" />
                     <div class="grid grid-cols-2 gap-2">
                         <form method="POST" action="{{ route('ops.absence-requests.reject', $item) }}"
-                              onsubmit="return confirm('Tolak pengajuan ini? Absensi tanggal tersebut akan jadi Alfa.')">
+                              data-turbo-confirm="Tolak pengajuan ini? Absensi tanggal tersebut akan jadi Alfa." data-confirm-label="Tolak" data-confirm-tone="danger">
                             @csrf
                             <input type="hidden" name="review_note" :value="note">
                             <button class="btn-secondary btn-block text-rose-700">Tolak</button>

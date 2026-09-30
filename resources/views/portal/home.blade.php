@@ -116,6 +116,8 @@
                 @endif
             </div>
 
+            <x-install-card />
+
             <div class="grid gap-3 sm:grid-cols-2">
                 <a href="{{ route('portal.schedule') }}" class="ui-card flex items-center gap-4 p-4 transition hover:border-teal-300">
                     <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-teal-50 text-teal-800"><x-icon name="calendar" class="h-5 w-5" /></span>
@@ -148,19 +150,19 @@
                 <div class="ui-card p-5">
                     <dl class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                         <div>
-                            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Gender</dt>
+                            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-500">Gender</dt>
                             <dd class="mt-1 text-sm text-slate-800">{{ $santri->gender?->label() ?? '—' }}</dd>
                         </div>
                         <div>
-                            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Tanggal lahir</dt>
+                            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-500">Tanggal lahir</dt>
                             <dd class="mt-1 text-sm text-slate-800">{{ $santri->birth_date ? \App\Support\DateLabel::dayMonthYear($santri->birth_date) : '—' }}</dd>
                         </div>
                         <div>
-                            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Sekolah</dt>
+                            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-500">Sekolah</dt>
                             <dd class="mt-1 text-sm text-slate-800">{{ $schoolLabel ?? '—' }}</dd>
                         </div>
                         <div>
-                            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Jalur mengaji</dt>
+                            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-500">Jalur mengaji</dt>
                             <dd class="mt-1 text-sm text-slate-800">
                                 {{ $trackLabel ?? '—' }}
                                 @if ($santri->track === \App\Enums\SantriTrack::Iqro && $santri->iqro_level)
@@ -169,27 +171,27 @@
                             </dd>
                         </div>
                         <div>
-                            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Wali</dt>
+                            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-500">Wali</dt>
                             <dd class="mt-1 text-sm text-slate-800">{{ $santri->parent_name ?: '—' }}</dd>
                         </div>
                         <div>
-                            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Telepon</dt>
+                            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-500">Telepon</dt>
                             <dd class="mt-1 text-sm text-slate-800">{{ $santri->user->phone ?: '—' }}</dd>
                         </div>
                         <div class="sm:col-span-2">
-                            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Alamat</dt>
+                            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-500">Alamat</dt>
                             <dd class="mt-1 text-sm text-slate-800 whitespace-pre-line">{{ $santri->address ?: '—' }}</dd>
                         </div>
                         <div>
-                            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Bergabung</dt>
+                            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-500">Bergabung</dt>
                             <dd class="mt-1 text-sm text-slate-800">{{ $santri->joined_at ? \App\Support\DateLabel::dayMonthYear($santri->joined_at) : '—' }}</dd>
                         </div>
                         <div>
-                            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Durasi</dt>
+                            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-500">Durasi</dt>
                             <dd class="mt-1 text-sm text-slate-800">{{ $membershipLabel }}</dd>
                         </div>
                         <div>
-                            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Lulus</dt>
+                            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-500">Lulus</dt>
                             <dd class="mt-1 text-sm text-slate-800">{{ $santri->graduated_at ? \App\Support\DateLabel::dayMonthYear($santri->graduated_at) : '—' }}</dd>
                         </div>
                     </dl>
@@ -240,7 +242,7 @@
 
                     <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
                         <div class="ui-card p-4">
-                            <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Kehadiran</p>
+                            <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Kehadiran</p>
                             @if ($todayAttendance)
                                 <p class="mt-2 font-display text-xl font-semibold text-teal-950">{{ $todayAttendance->status->label() }}</p>
                                 <p class="mt-1 text-xs text-slate-500">{{ $todayAttendance->status->hint() }}</p>
@@ -250,7 +252,7 @@
                             @endif
                         </div>
                         <div class="ui-card p-4">
-                            <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Setoran</p>
+                            <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Setoran</p>
                             @if ($todaySetoran->isNotEmpty())
                                 <p class="mt-2 font-display text-xl font-semibold text-teal-950">{{ $todaySetoran->first()->status->label() }}</p>
                                 <p class="mt-1 text-xs text-slate-500">{{ $todaySetoran->first()->passageLabel() }}</p>
@@ -320,7 +322,7 @@
             <section id="pembayaran" class="ui-card scroll-mt-24 space-y-3 p-5">
                 <div class="flex items-center justify-between gap-3">
                     <h2 class="ui-section-title">Info pembayaran</h2>
-                    <p class="text-xs text-slate-400">Rp {{ number_format($sppAmount ?? \App\Support\AppSettings::DefaultSppMonthlyAmount, 0, ',', '.') }}/bln</p>
+                    <p class="text-xs text-slate-500">Rp {{ number_format($sppAmount ?? \App\Support\AppSettings::DefaultSppMonthlyAmount, 0, ',', '.') }}/bln</p>
                 </div>
                 @if (($unpaidMonths ?? 0) > 1)
                     <div class="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">

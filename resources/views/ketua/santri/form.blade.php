@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :back="route('ketua.santri.index')">
     <x-slot name="header">
         <div>
             <p class="ui-section-title">Santri</p>

@@ -104,14 +104,14 @@
         <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-teal-50 text-teal-800"><x-icon name="users" /></span>
         <p class="mt-4 font-display text-3xl font-semibold text-teal-950">{{ $stats['santriAktif'] }}</p>
         <p class="text-sm text-slate-500">Santri aktif</p>
-        <p class="mt-1 text-xs text-slate-400">{{ $stats['pengajar'] }} pengajar</p>
+        <p class="mt-1 text-xs text-slate-500">{{ $stats['pengajar'] }} pengajar</p>
     </div>
     <div class="stat-card">
         <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-sky-50 text-sky-700"><x-icon name="book" /></span>
         <p class="mt-4 font-display text-3xl font-semibold text-teal-950">{{ $stats['setoranHariIni'] }}</p>
         <p class="text-sm text-slate-500">Setoran hari ini</p>
         @if ($stats['santriAktif'] > 0)
-            <p class="mt-1 text-xs {{ $stats['sudahSetorHariIni'] < $stats['santriAktif'] ? 'text-amber-700' : 'text-slate-400' }}">
+            <p class="mt-1 text-xs {{ $stats['sudahSetorHariIni'] < $stats['santriAktif'] ? 'text-amber-700' : 'text-slate-500' }}">
                 {{ $stats['sudahSetorHariIni'] }}/{{ $stats['santriAktif'] }} sudah setor
             </p>
         @endif

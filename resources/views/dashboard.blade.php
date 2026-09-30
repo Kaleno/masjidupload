@@ -30,6 +30,8 @@
             @endif
         </div>
 
+        <x-install-card />
+
         @if ($isKetua && ($readiness['ready'] ?? true) === false)
             @include('dashboard.partials.readiness')
         @endif

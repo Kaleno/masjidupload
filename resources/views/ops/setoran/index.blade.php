@@ -27,10 +27,10 @@
             };
             $summaryTone = function (array $row) use ($summary): string {
                 if ($summary['active'] === 0) {
-                    return 'text-slate-400';
+                    return 'text-slate-500';
                 }
 
-                return ($row['belum'] > 0 || $row['ulang'] > 0) ? 'text-amber-700' : 'text-slate-400';
+                return ($row['belum'] > 0 || $row['ulang'] > 0) ? 'text-amber-700' : 'text-slate-500';
             };
         @endphp
 
@@ -108,14 +108,20 @@
                             {{ $item->status->label() }}
                         </x-badge>
                         @unless ($singleDay)
-                            <span class="text-[10px] text-slate-400">{{ $item->setoran_date->locale(app()->getLocale())->translatedFormat('j M') }}</span>
+                            <span class="text-[10px] text-slate-500">{{ $item->setoran_date->locale(app()->getLocale())->translatedFormat('j M') }}</span>
                         @endunless
                     </div>
                 </a>
             @empty
                 <div class="lg:col-span-2">
                     <x-empty>
-                        Tidak ada setoran pada rentang ini. Ketuk Input untuk mencatat.
+                        Tidak ada setoran pada rentang ini.
+                        <x-slot:action>
+                            <a href="{{ route('ops.setoran.create') }}" class="btn-primary">
+                                <x-icon name="plus" class="h-4 w-4" />
+                                Input setoran
+                            </a>
+                        </x-slot:action>
                     </x-empty>
                 </div>
             @endforelse

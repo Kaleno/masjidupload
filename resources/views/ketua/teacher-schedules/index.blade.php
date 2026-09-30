@@ -72,7 +72,15 @@
                     @forelse ($upcoming as $schedule)
                         @include('ketua.teacher-schedules.item', ['schedule' => $schedule])
                     @empty
-                        <x-empty>Belum ada jadwal khusus. Semua pengajar dianggap masuk.</x-empty>
+                        <x-empty>
+                            Belum ada jadwal khusus. Semua pengajar dianggap masuk.
+                            <x-slot:action>
+                                <label for="date_from" class="btn-secondary cursor-pointer">
+                                    <x-icon name="plus" class="h-4 w-4" />
+                                    Atur jadwal pengajar
+                                </label>
+                            </x-slot:action>
+                        </x-empty>
                     @endforelse
                 </div>
             </section>

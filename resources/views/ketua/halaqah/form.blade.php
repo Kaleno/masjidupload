@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :back="route('ketua.halaqah.index')">
     <x-slot name="header">
         <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>

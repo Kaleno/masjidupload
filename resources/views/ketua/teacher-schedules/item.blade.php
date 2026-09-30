@@ -13,7 +13,7 @@
         @endif
     </div>
     <form method="POST" action="{{ route('ketua.teacher-schedules.destroy', $schedule) }}" class="shrink-0"
-          onsubmit="return confirm('Hapus jadwal ini? Tanggal tersebut kembali ke semua pengajar masuk.')">
+          data-turbo-confirm="Hapus jadwal ini? Tanggal tersebut kembali ke semua pengajar masuk." data-confirm-label="Hapus" data-confirm-tone="danger">
         @csrf
         @method('DELETE')
         <button class="text-sm font-semibold text-rose-700">Hapus</button>

@@ -1,7 +1,15 @@
-const CACHE = 'al-ihsan-static-v2';
+const CACHE = 'al-ihsan-static-v3';
+const OFFLINE_URL = '/offline';
 
 self.addEventListener('install', (event) => {
-    event.waitUntil(self.skipWaiting());
+    event.waitUntil(
+        caches.open(CACHE)
+            .then((cache) => cache.addAll([
+                new Request(OFFLINE_URL, { cache: 'reload' }),
+                '/icons/icon-192.png',
+            ]))
+            .then(() => self.skipWaiting()),
+    );
 });
 
 self.addEventListener('activate', (event) => {
@@ -31,11 +39,18 @@ self.addEventListener('fetch', (event) => {
         || url.pathname.startsWith('/icons/')
         || url.pathname.startsWith('/images/');
 
-    if (! isStatic) {
+    if (isStatic) {
+        event.respondWith(cacheFirst(request));
+
         return;
     }
 
-    event.respondWith(cacheFirst(request));
+    const wantsHtml = request.mode === 'navigate'
+        || (request.headers.get('accept') ?? '').includes('text/html');
+
+    if (wantsHtml) {
+        event.respondWith(networkOrOfflinePage(request));
+    }
 });
 
 async function cacheFirst(request) {
@@ -53,4 +68,19 @@ async function cacheFirst(request) {
     }
 
     return response;
+}
+
+async function networkOrOfflinePage(request) {
+    try {
+        return await fetch(request);
+    } catch (error) {
+        const cache = await caches.open(CACHE);
+        const offline = await cache.match(OFFLINE_URL);
+
+        if (offline) {
+            return offline;
+        }
+
+        throw error;
+    }
 }

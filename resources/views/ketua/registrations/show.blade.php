@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :back="route('ketua.registrations.index')">
     <x-slot name="header">
         <div>
             <p class="ui-section-title">Pendaftaran</p>

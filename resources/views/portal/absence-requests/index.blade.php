@@ -78,7 +78,7 @@
                     @endif
                     @if ($item->isPending())
                         <form method="POST" action="{{ route('portal.absence-requests.cancel', $item) }}"
-                              onsubmit="return confirm('Batalkan pengajuan ini?')">
+                              data-turbo-confirm="Batalkan pengajuan ini?" data-confirm-label="Ya, batalkan" data-confirm-tone="danger">
                             @csrf
                             @method('PATCH')
                             <button class="text-sm font-semibold text-rose-700">Batalkan</button>
@@ -86,7 +86,17 @@
                     @endif
                 </div>
             @empty
-                <x-empty>Belum ada pengajuan.</x-empty>
+                <x-empty>
+                    Belum ada pengajuan.
+                    @if ($canSubmit)
+                        <x-slot:action>
+                            <label for="reason" class="btn-secondary cursor-pointer">
+                                <x-icon name="plus" class="h-4 w-4" />
+                                Ajukan izin / sakit
+                            </label>
+                        </x-slot:action>
+                    @endif
+                </x-empty>
             @endforelse
             </div>
         </section>

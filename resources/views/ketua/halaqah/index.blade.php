@@ -31,7 +31,7 @@
                                 <td data-label="Pengajar">{{ $item->ustaz->name }}</td>
                                 <td data-label="Jadwal">
                                     @if ($item->schedules->isEmpty())
-                                        <span class="text-slate-400">Belum ada jadwal</span>
+                                        <span class="text-slate-500">Belum ada jadwal</span>
                                     @else
                                         {{ \App\Support\WeekDay::summarize($item->schedules->pluck('day_of_week')->all()) }}
                                         · {{ $item->schedules->first()->timeRange() }}
@@ -43,7 +43,15 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr><td colspan="5" class="px-5 py-8 text-center text-slate-500">Belum ada kelas. Buat kelas untuk mengatur jadwal pembelajaran.</td></tr>
+                            <tr>
+                                <td colspan="5" class="px-5 py-8 text-center text-slate-500">
+                                    <p>Belum ada kelas. Buat kelas untuk mengatur jadwal pembelajaran.</p>
+                                    <a href="{{ route('ketua.halaqah.create') }}" class="btn-primary mt-4">
+                                        <x-icon name="plus" class="h-4 w-4" />
+                                        Buat kelas
+                                    </a>
+                                </td>
+                            </tr>
                         @endempty
                     </tbody>
                 </table>

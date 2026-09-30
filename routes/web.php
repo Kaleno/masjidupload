@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/manifest.webmanifest', PwaManifestController::class)->name('pwa.manifest');
 Route::get('/sw.js', PwaServiceWorkerController::class)->name('pwa.service-worker');
+Route::view('/offline', 'offline')->name('offline');
 
 Route::get('/', function () {
     return auth()->check()

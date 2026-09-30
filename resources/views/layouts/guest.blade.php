@@ -9,9 +9,6 @@
 
         <title>{{ config('app.name') }}</title>
 
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=fraunces:500,600,700|plus-jakarta-sans:400,500,600,700&display=swap" rel="stylesheet" />
-
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans text-slate-800 antialiased">
@@ -63,5 +60,7 @@
                 @include('partials.copyright', ['class' => 'mt-6 text-center'])
             </div>
         </div>
+
+        @include('partials.confirm-sheet')
     </body>
 </html>

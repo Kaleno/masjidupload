@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :back="route('super-admin.ketua.index')">
     <x-slot name="header">
         <div>
             <p class="ui-section-title">Daftar Akun</p>

@@ -88,7 +88,8 @@
                                         <form
                                             method="POST"
                                             action="{{ route('ketua.santri.reset-password', $santri) }}"
-                                            onsubmit="return confirm('Reset password {{ $santri->user->name }} ke default (password)?')"
+                                            data-turbo-confirm="Reset password {{ $santri->user->name }} ke default (password)?"
+                                            data-confirm-label="Reset password"
                                         >
                                             @csrf
                                             @method('PATCH')
@@ -103,7 +104,9 @@
                                         <form
                                             method="POST"
                                             action="{{ route('ketua.santri.destroy', $santri) }}"
-                                            onsubmit="return confirm('Hapus permanen {{ $santri->user->name }} (NIS {{ $santri->nis }})? Data absensi, setoran, dan SPP ikut terhapus.')"
+                                            data-turbo-confirm="Hapus permanen {{ $santri->user->name }} (NIS {{ $santri->nis }})? Data absensi, setoran, dan SPP ikut terhapus."
+                                            data-confirm-label="Hapus permanen"
+                                            data-confirm-tone="danger"
                                         >
                                             @csrf
                                             @method('DELETE')
@@ -119,7 +122,15 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr><td colspan="5" class="px-5 py-8 text-center text-slate-500">Belum ada santri.</td></tr>
+                            <tr>
+                                <td colspan="5" class="px-5 py-8 text-center text-slate-500">
+                                    <p>Belum ada santri.</p>
+                                    <a href="{{ route('ketua.santri.create') }}" class="btn-primary mt-4">
+                                        <x-icon name="plus" class="h-4 w-4" />
+                                        Tambah santri pertama
+                                    </a>
+                                </td>
+                            </tr>
                         @endempty
                     </tbody>
                 </table>
@@ -129,6 +140,8 @@
 
         <div
             x-show="open"
+            x-dialog="open"
+            @dialog-back="close()"
             x-cloak
             class="fixed inset-0 z-50 flex items-center justify-center p-4"
             role="dialog"
@@ -154,50 +167,50 @@
                                 <template x-if="!detail.photo_url">
                                     <div class="flex h-24 w-24 items-center justify-center rounded-full bg-teal-50 font-display text-2xl font-semibold text-teal-800" x-text="(detail.name || '?').charAt(0)"></div>
                                 </template>
-                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Foto</p>
+                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Foto</p>
                             </div>
                             <div>
-                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Nama</p>
+                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Nama</p>
                                 <p class="mt-1 font-semibold text-teal-950" x-text="detail.name"></p>
                             </div>
                             <div>
-                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Tanggal lahir</p>
+                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Tanggal lahir</p>
                                 <p class="mt-1 text-slate-800" x-text="detail.birth_date"></p>
                             </div>
                             <div>
-                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Telepon</p>
+                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Telepon</p>
                                 <p class="mt-1 text-slate-800" x-text="detail.phone"></p>
                             </div>
                             <div>
-                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Alamat</p>
+                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Alamat</p>
                                 <p class="mt-1 text-slate-800" x-text="detail.address"></p>
                             </div>
                             <div>
-                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Wali</p>
+                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Wali</p>
                                 <p class="mt-1 text-slate-800" x-text="detail.parent_name"></p>
                             </div>
                         </div>
 
                         <div class="space-y-4 border-t border-slate-100 pt-5 sm:border-l sm:border-t-0 sm:pl-8 sm:pt-0">
-                            <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Data lainnya</p>
+                            <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Data lainnya</p>
                             <div>
-                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Jalur mengaji</p>
+                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Jalur mengaji</p>
                                 <p class="mt-1 text-slate-800" x-text="detail.track"></p>
                             </div>
                             <div>
-                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Status</p>
+                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Status</p>
                                 <p class="mt-1 text-slate-800" x-text="detail.status"></p>
                             </div>
                             <div>
-                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Tanggal bergabung</p>
+                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Tanggal bergabung</p>
                                 <p class="mt-1 text-slate-800" x-text="detail.joined_at"></p>
                             </div>
                             <div>
-                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Durasi bergabung</p>
+                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Durasi bergabung</p>
                                 <p class="mt-1 text-slate-800" x-text="detail.duration"></p>
                             </div>
                             <div>
-                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Tanggal lulus</p>
+                                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Tanggal lulus</p>
                                 <p class="mt-1 text-slate-800" x-text="detail.graduated_at"></p>
                             </div>
                         </div>

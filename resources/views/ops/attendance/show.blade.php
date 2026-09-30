@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :back="route('ops.attendance.index')">
     <x-slot name="header">
         <div>
             <p class="ui-section-title">Absensi</p>

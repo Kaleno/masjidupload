@@ -68,7 +68,7 @@
                                             <button class="ui-link">Aktifkan</button>
                                         </form>
                                     @endunless
-                                    <form method="POST" action="{{ route('ketua.academic-years.destroy', $year) }}" onsubmit="return confirm('Hapus tahun ajaran ini?')">
+                                    <form method="POST" action="{{ route('ketua.academic-years.destroy', $year) }}" data-turbo-confirm="Hapus tahun ajaran ini?" data-confirm-label="Hapus" data-confirm-tone="danger">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn-danger-ghost min-h-10 text-sm">Hapus</button>

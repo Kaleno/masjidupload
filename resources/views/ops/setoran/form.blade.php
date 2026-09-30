@@ -14,16 +14,13 @@
             <input type="hidden" name="sesi" value="{{ $session->id }}">
         @endif
         <div>
-            <x-input-label for="santri_id" value="Santri" />
-            <select id="santri_id" name="santri_id" required class="mt-1.5 ui-input"
-                    @change="applyContinueProgress()">
-                <option value="">Pilih santri</option>
-                @foreach ($members as $member)
-                    <option value="{{ $member->id }}" @selected(old('santri_id', $members->count() === 1 ? $members->first()->id : null) == $member->id)>
-                        {{ $member->user->name }} — {{ $member->track?->label() }}
-                    </option>
-                @endforeach
-            </select>
+            <x-input-label for="santri_id_search" value="Santri" class="mb-1.5" />
+            <x-santri-picker
+                :members="$members"
+                :selected="old('santri_id', $members->count() === 1 ? $members->first()->id : null)"
+                :pending-ids="$pendingSantriIds ?? []"
+                :pending-label="($isSessionToday ?? true) ? 'Belum setor hari ini' : 'Belum setor di tanggal sesi ini'"
+            />
             <x-input-error class="mt-2" :messages="$errors->get('santri_id')" />
         </div>
     @endif

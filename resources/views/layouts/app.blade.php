@@ -9,9 +9,6 @@
 
         <title>{{ $title ?? config('app.name') }}</title>
 
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=fraunces:500,600,700|plus-jakarta-sans:400,500,600,700&display=swap" rel="stylesheet" />
-
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased text-slate-800">
@@ -50,17 +47,14 @@
                 </header>
 
                 <main class="flex-1 px-4 sm:px-6 lg:px-8 py-5 lg:py-6">
-                    @if (session('status') && ! in_array(session('status'), ['profile-updated', 'password-updated', 'verification-link-sent'], true))
-                        <div class="mb-4 rounded-2xl border border-teal-200 bg-teal-50 px-4 py-3 text-sm text-teal-900 shadow-soft">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
                     {{ $slot }}
                 </main>
 
                 @include('partials.copyright', ['class' => 'px-4 pb-6 sm:px-6 lg:px-8'])
             </div>
         </div>
+
+        @include('partials.toast')
+        @include('partials.confirm-sheet')
     </body>
 </html>
