@@ -33,9 +33,12 @@
             </p>
         </div>
 
-        <div class="grid gap-3 lg:grid-cols-2">
+        <div x-data="searchList" class="space-y-3">
+        <x-list-search />
+
+        <div class="ui-scroll-list grid gap-3 lg:grid-cols-2">
         @forelse ($rows as $row)
-            <div class="ui-card p-5">
+            <div class="ui-card p-5" data-search="{{ str(($row['santri']?->user->name ?? '').' '.($row['santri']?->nis ?? ''))->lower() }}">
                 <div class="flex items-start justify-between gap-3">
                     <div class="min-w-0">
                         <p class="font-semibold text-teal-950">{{ $row['santri']?->user->name }}</p>
@@ -67,6 +70,7 @@
                 <x-empty>Belum ada absensi pada rentang ini.</x-empty>
             </div>
         @endforelse
+        </div>
         </div>
     </div>
 </x-app-layout>

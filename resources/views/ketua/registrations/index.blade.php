@@ -9,7 +9,7 @@
     <div class="w-full max-w-4xl space-y-6">
         <section class="space-y-3">
             <h2 class="ui-section-title">Menunggu ({{ $pending->count() }})</h2>
-            <div class="max-h-64 space-y-3 overflow-y-auto pr-1">
+            <div class="ui-scroll-list space-y-3">
             @forelse ($pending as $item)
                 <a href="{{ route('ketua.registrations.show', $item) }}" class="ui-card flex items-center gap-3 p-4 sm:gap-4">
                     @if ($item->photoUrl())
@@ -34,7 +34,7 @@
         @if ($recent->isNotEmpty())
             <section class="space-y-3">
                 <h2 class="ui-section-title">Baru diproses</h2>
-                <div class="max-h-64 space-y-3 overflow-y-auto pr-1">
+                <div class="ui-scroll-list space-y-3">
                     @foreach ($recent as $item)
                         <div class="ui-card flex items-center justify-between gap-3 p-4">
                             <div>

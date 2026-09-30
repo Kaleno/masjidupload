@@ -91,7 +91,7 @@
             </div>
         </div>
 
-        <div class="grid gap-2 lg:grid-cols-2">
+        <div class="ui-scroll-list grid gap-2 lg:grid-cols-2">
             @forelse ($setoran as $item)
                 <a href="{{ route('ops.setoran.edit', $item) }}" class="ui-card flex items-center gap-3 px-4 py-3">
                     <div class="min-w-0 flex-1">

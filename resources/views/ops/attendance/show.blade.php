@@ -39,10 +39,13 @@
                 @method('PUT')
                 <x-input-error :messages="$errors->get('rows')" class="mb-2" />
 
-                <div class="ui-card divide-y divide-slate-100/90 overflow-hidden">
+                <div x-data="searchList" class="space-y-3">
+                <x-list-search />
+
+                <div class="ui-card ui-scroll divide-y divide-slate-100/90">
                     @foreach ($roster as $row)
                         @php $id = (string) $row->santri_id; @endphp
-                        <div class="px-3 py-2.5 sm:px-4">
+                        <div class="px-3 py-2.5 sm:px-4" data-search="{{ str($row->santri->user->name.' '.$row->santri->nis)->lower() }}">
                             <div class="flex w-full min-w-0 flex-col gap-2.5 lg:flex-row lg:items-center lg:gap-4">
                                 <div class="flex min-w-0 items-center gap-2.5 lg:w-52 lg:shrink-0">
                                     <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-teal-50 text-sm font-semibold text-teal-800">
@@ -88,6 +91,7 @@
                             </div>
                         </div>
                     @endforeach
+                </div>
                 </div>
 
                 <div class="sticky bottom-20 z-20 lg:static lg:bottom-auto">

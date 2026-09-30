@@ -12,7 +12,7 @@
         @if ($logs->isEmpty())
             <x-empty>Belum ada catatan audit.</x-empty>
         @else
-            <div class="max-h-96 space-y-2 overflow-y-auto pr-1">
+            <div class="ui-scroll-list space-y-2">
                 @foreach ($logs as $log)
                     <div class="ui-card p-4">
                         <p class="text-sm leading-relaxed text-teal-950">{{ $log->remark }}</p>

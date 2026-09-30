@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Portal;
 
 use App\Http\Controllers\Controller;
+use App\Models\AbsenceRequest;
 use App\Services\SantriMonitor;
 use App\Support\Role;
 use Illuminate\Http\Request;
@@ -22,6 +23,13 @@ class MonitorController extends Controller
         $santri = $user->santriProfile;
         abort_unless($santri, 404);
 
-        return view('portal.home', $this->monitor->for($santri));
+        return view('portal.home', [
+            ...$this->monitor->for($santri),
+            'latestRequest' => AbsenceRequest::query()
+                ->where('santri_id', $santri->id)
+                ->latest()
+                ->latest('id')
+                ->first(),
+        ]);
     }
 }

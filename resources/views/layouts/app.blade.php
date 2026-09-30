@@ -57,6 +57,8 @@
 
                     {{ $slot }}
                 </main>
+
+                @include('partials.copyright', ['class' => 'px-4 pb-6 sm:px-6 lg:px-8'])
             </div>
         </div>
     </body>

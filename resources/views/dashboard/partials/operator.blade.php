@@ -46,7 +46,7 @@
         @if ($overview['alfaToday']->isNotEmpty())
             <div class="ui-card p-4">
                 <p class="text-sm font-semibold text-rose-800">Alfa hari ini · {{ $stats['alfaHariIni'] }}</p>
-                <div class="mt-3 max-h-64 space-y-3 overflow-y-auto">
+                <div class="mt-3 ui-scroll-sm space-y-3">
                 @foreach ($overview['alfaToday'] as $row)
                     <div class="flex items-start justify-between gap-3">
                         <div>
@@ -63,7 +63,7 @@
             <div class="grid grid-cols-1 gap-3 lg:grid-cols-2">
                 <div class="ui-card overflow-hidden" data-queue="setoran-ulang">
                     <p class="border-b border-teal-950/5 px-4 py-3 text-sm font-semibold text-amber-800">Setoran perlu diulang · {{ $followUpCount }}</p>
-                    <div class="max-h-64 space-y-3 overflow-y-auto px-4 py-3">
+                    <div class="ui-scroll-sm space-y-3 px-4 py-3">
                         @forelse ($overview['followUpSetoran'] as $item)
                             <a href="{{ route('ops.setoran.edit', $item) }}" class="flex items-start justify-between gap-3">
                                 <div>
@@ -80,7 +80,7 @@
 
                 <div class="ui-card overflow-hidden" data-queue="belum-setor">
                     <p class="border-b border-teal-950/5 px-4 py-3 text-sm font-semibold text-slate-700">Belum setor hari ini · {{ $pendingCount }}</p>
-                    <div class="max-h-64 space-y-3 overflow-y-auto px-4 py-3">
+                    <div class="ui-scroll-sm space-y-3 px-4 py-3">
                         @forelse ($overview['pendingSetoran'] as $santri)
                             <div class="flex items-start justify-between gap-3">
                                 <div>

@@ -37,6 +37,7 @@
         </x-card>
 
         <div class="ui-table-wrap">
+            <div class="ui-scroll">
             <table class="ui-table ui-table-stack">
                 <thead>
                     <tr>
@@ -80,6 +81,7 @@
                     @endempty
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 </x-app-layout>

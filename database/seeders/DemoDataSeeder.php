@@ -46,6 +46,7 @@ class DemoDataSeeder extends Seeder
             [
                 'name' => 'Ahmad',
                 'email' => 'ustaz1@kp-sds.test',
+                'phone' => '6281200000001',
                 'password' => 'password',
                 'is_active' => true,
                 'organization_id' => $organizationId,
@@ -58,6 +59,7 @@ class DemoDataSeeder extends Seeder
             [
                 'name' => 'Budi',
                 'email' => 'pengajar1@kp-sds.test',
+                'phone' => '6281200000002',
                 'password' => 'password',
                 'is_active' => true,
                 'organization_id' => $organizationId,

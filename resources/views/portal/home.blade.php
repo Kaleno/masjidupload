@@ -116,6 +116,30 @@
                 @endif
             </div>
 
+            <div class="grid gap-3 sm:grid-cols-2">
+                <a href="{{ route('portal.schedule') }}" class="ui-card flex items-center gap-4 p-4 transition hover:border-teal-300">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-teal-50 text-teal-800"><x-icon name="calendar" class="h-5 w-5" /></span>
+                    <span class="min-w-0">
+                        <span class="block font-semibold text-teal-950">Jadwal belajar</span>
+                        <span class="block text-sm text-slate-500">Tanggal libur & pengajar bulan ini</span>
+                    </span>
+                </a>
+                <a href="{{ route('portal.absence-requests.index') }}" class="ui-card flex items-center gap-4 p-4 transition hover:border-teal-300">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-amber-50 text-amber-800"><x-icon name="clipboard" class="h-5 w-5" /></span>
+                    <span class="min-w-0 flex-1">
+                        <span class="block font-semibold text-teal-950">Pengajuan izin / sakit</span>
+                        @if ($latestRequest ?? null)
+                            <span class="block truncate text-sm text-slate-500">{{ $latestRequest->type->label() }} · {{ $latestRequest->periodLabel() }}</span>
+                        @else
+                            <span class="block text-sm text-slate-500">Ajukan kalau tidak bisa hadir</span>
+                        @endif
+                    </span>
+                    @if ($latestRequest ?? null)
+                        <x-badge :tone="$latestRequest->status->badgeTone()" class="shrink-0">{{ $latestRequest->status->label() }}</x-badge>
+                    @endif
+                </a>
+            </div>
+
             <section id="data-diri" class="scroll-mt-24 space-y-3">
                 <div class="flex items-end justify-between gap-3 px-1">
                     <h2 class="ui-section-title">Data diri</h2>
@@ -318,7 +342,7 @@
                         </x-badge>
                     </div>
                 @endif
-                <div class="max-h-64 space-y-2 overflow-y-auto pr-1">
+                <div class="ui-scroll-sm space-y-2">
                     @foreach ($payments ?? [] as $row)
                         <div class="flex items-center justify-between gap-3 text-sm">
                             <span class="text-slate-600">{{ $row['label'] }}</span>
@@ -336,6 +360,7 @@
 
             <section id="setoran" class="scroll-mt-24 space-y-2">
                 <h2 class="ui-section-title px-1">Setoran terakhir</h2>
+                <div class="ui-scroll-sm space-y-2">
                 @forelse ($setoran as $item)
                     <div class="ui-card p-4">
                         <div class="flex items-start justify-between gap-3">
@@ -352,6 +377,7 @@
                 @empty
                     <x-empty>Belum ada setoran. Pengajar akan mencatat setoran setelah pertemuan.</x-empty>
                 @endforelse
+                </div>
             </section>
 
             <section id="absensi" class="scroll-mt-24 space-y-3">
@@ -383,7 +409,7 @@
                     </div>
                 @endif
 
-                <div class="max-h-64 space-y-3 overflow-y-auto pr-1">
+                <div class="ui-scroll-sm space-y-3">
                 @forelse ($attendances as $row)
                     <div class="ui-card flex items-center justify-between gap-3 p-4">
                         <div>

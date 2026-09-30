@@ -17,6 +17,7 @@ class AttendanceSessionService
     public function __construct(
         private OperationalCalendar $calendar,
         private AuditLogger $audit,
+        private AbsenceRequestService $absences,
     ) {}
 
     /**
@@ -54,13 +55,19 @@ class AttendanceSessionService
 
     public function syncMembers(AttendanceSession $session): void
     {
-        SantriProfile::query()->aktif()->each(function (SantriProfile $santri) use ($session): void {
+        $requests = $this->absences->resolvedOn($session->session_date->toDateString());
+
+        SantriProfile::query()->aktif()->each(function (SantriProfile $santri) use ($session, $requests): void {
+            $request = $requests->get($santri->id);
+
             Attendance::query()->firstOrCreate(
                 [
                     'attendance_session_id' => $session->id,
                     'santri_id' => $santri->id,
                 ],
-                ['status' => AttendanceStatus::Hadir],
+                $request
+                    ? ['status' => $request->resultingStatus(), 'note' => $request->attendanceNote()]
+                    : ['status' => AttendanceStatus::Hadir],
             );
         });
     }

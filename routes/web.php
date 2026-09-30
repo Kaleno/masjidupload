@@ -6,15 +6,21 @@ use App\Http\Controllers\Ketua\FinanceController;
 use App\Http\Controllers\Ketua\HolidayController;
 use App\Http\Controllers\Ketua\SantriController;
 use App\Http\Controllers\Ketua\SantriRegistrationController as KetuaSantriRegistrationController;
+use App\Http\Controllers\Ketua\TeacherScheduleController;
 use App\Http\Controllers\Ketua\UstazController;
 use App\Http\Controllers\Laporan\AttendanceRecapController;
+use App\Http\Controllers\Laporan\AttendanceReportController;
 use App\Http\Controllers\Laporan\ProgressController;
+use App\Http\Controllers\Laporan\SppReportController;
+use App\Http\Controllers\Ops\AbsenceRequestController as OpsAbsenceRequestController;
 use App\Http\Controllers\Ops\AttendanceController;
 use App\Http\Controllers\Ops\SantriTrackController;
 use App\Http\Controllers\Ops\SetoranController;
 use App\Http\Controllers\Ops\SppController;
+use App\Http\Controllers\Portal\AbsenceRequestController as PortalAbsenceRequestController;
 use App\Http\Controllers\Portal\MonitorController;
 use App\Http\Controllers\Portal\ProfileController as PortalProfileController;
+use App\Http\Controllers\Portal\ScheduleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\SantriRegistrationController as PublicSantriRegistrationController;
 use App\Http\Controllers\PwaManifestController;
@@ -89,6 +95,10 @@ Route::middleware(['auth', 'active', 'session.date', 'organization'])->group(fun
         Route::get('libur', [HolidayController::class, 'index'])->name('holidays.index');
         Route::post('libur', [HolidayController::class, 'store'])->name('holidays.store');
         Route::delete('libur/{holiday}', [HolidayController::class, 'destroy'])->name('holidays.destroy');
+
+        Route::get('jadwal-pengajar', [TeacherScheduleController::class, 'index'])->name('teacher-schedules.index');
+        Route::post('jadwal-pengajar', [TeacherScheduleController::class, 'store'])->name('teacher-schedules.store');
+        Route::delete('jadwal-pengajar/{teacherSchedule}', [TeacherScheduleController::class, 'destroy'])->name('teacher-schedules.destroy');
     });
 
     Route::middleware('role:'.Role::Ketua.'|'.Role::KetuaPengajar.'|'.Role::Pengajar)->prefix('ops')->name('ops.')->group(function () {
@@ -106,6 +116,10 @@ Route::middleware(['auth', 'active', 'session.date', 'organization'])->group(fun
             Route::patch('santri/{santri}/track', [SantriTrackController::class, 'update'])->name('santri.track');
             Route::get('spp', [SppController::class, 'index'])->name('spp.index');
             Route::post('spp', [SppController::class, 'store'])->name('spp.store');
+
+            Route::get('pengajuan-izin', [OpsAbsenceRequestController::class, 'index'])->name('absence-requests.index');
+            Route::post('pengajuan-izin/{absenceRequest}/approve', [OpsAbsenceRequestController::class, 'approve'])->name('absence-requests.approve');
+            Route::post('pengajuan-izin/{absenceRequest}/reject', [OpsAbsenceRequestController::class, 'reject'])->name('absence-requests.reject');
         });
     });
 
@@ -117,10 +131,21 @@ Route::middleware(['auth', 'active', 'session.date', 'organization'])->group(fun
         Route::get('progress/hafalan/{santri}', [ProgressController::class, 'hafalanShow'])->name('progress.hafalan.show');
         Route::get('progress/{santri}', [ProgressController::class, 'show'])->name('progress.show');
         Route::get('absensi', AttendanceRecapController::class)->name('attendance.index');
+        Route::get('absensi-bulanan', [AttendanceReportController::class, 'index'])->name('absensi.index');
+        Route::get('absensi-bulanan/download', [AttendanceReportController::class, 'download'])->name('absensi.download');
+
+        Route::middleware('role:'.Role::Ketua.'|'.Role::KetuaPengajar)->group(function () {
+            Route::get('spp', [SppReportController::class, 'index'])->name('spp.index');
+            Route::get('spp/download', [SppReportController::class, 'download'])->name('spp.download');
+        });
     });
 
     Route::middleware('role:'.Role::Santri)->prefix('portal')->name('portal.')->group(function () {
         Route::get('/', MonitorController::class)->name('home');
+        Route::get('/jadwal', ScheduleController::class)->name('schedule');
+        Route::get('/pengajuan', [PortalAbsenceRequestController::class, 'index'])->name('absence-requests.index');
+        Route::post('/pengajuan', [PortalAbsenceRequestController::class, 'store'])->name('absence-requests.store');
+        Route::patch('/pengajuan/{absenceRequest}/batal', [PortalAbsenceRequestController::class, 'cancel'])->name('absence-requests.cancel');
         Route::get('/profil', [PortalProfileController::class, 'edit'])->name('profile.edit');
         Route::put('/profil', [PortalProfileController::class, 'update'])->name('profile.update');
     });

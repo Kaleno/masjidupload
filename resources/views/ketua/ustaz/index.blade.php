@@ -26,7 +26,7 @@
         @keydown.escape.window="close()"
     >
         <div class="ui-table-wrap">
-            <div class="overflow-x-auto">
+            <div class="ui-scroll">
                 <table class="ui-table ui-table-stack">
                     <thead>
                         <tr>

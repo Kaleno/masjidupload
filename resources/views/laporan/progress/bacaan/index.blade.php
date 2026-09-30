@@ -12,11 +12,15 @@
             <a href="{{ route('laporan.progress.hafalan.index') }}" class="btn-secondary min-h-10 px-4 text-sm">Hafalan</a>
         </div>
 
-        <div class="grid gap-3 lg:grid-cols-2">
+        <div x-data="searchList" class="space-y-3">
+        <x-list-search />
+
+        <div class="ui-scroll-list grid gap-3 lg:grid-cols-2">
         @forelse ($rows as $row)
             @php $data = $row['data']; @endphp
             <a href="{{ route('laporan.progress.bacaan.show', $row['santri']) }}"
-               class="ui-card block p-4 transition hover:-translate-y-0.5 hover:shadow-lift">
+               data-search="{{ str($row['santri']->user->name.' '.$row['santri']->nis)->lower() }}"
+               class="ui-card block p-4 transition hover:shadow-lift">
                 <div class="flex items-start justify-between gap-3">
                     <div class="min-w-0">
                         <p class="font-semibold text-teal-950">{{ $row['santri']->user->name }}</p>
@@ -45,6 +49,7 @@
                 <x-empty>Belum ada santri aktif.</x-empty>
             </div>
         @endforelse
+        </div>
         </div>
     </div>
 </x-app-layout>

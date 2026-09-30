@@ -37,9 +37,9 @@
 
         <section class="space-y-3">
             <h2 class="ui-section-title px-1">Riwayat sesi</h2>
-            <div class="grid gap-3 sm:grid-cols-2">
+            <div class="ui-scroll-list grid gap-3 sm:grid-cols-2">
             @forelse ($recent as $item)
-                <a href="{{ route('ops.attendance.show', $item) }}" class="ui-card block p-4 transition hover:-translate-y-0.5 hover:shadow-lift">
+                <a href="{{ route('ops.attendance.show', $item) }}" class="ui-card block p-4 transition hover:shadow-lift">
                     <p class="font-semibold text-teal-950">{{ \App\Support\DateLabel::long($item->session_date) }}</p>
                 </a>
             @empty

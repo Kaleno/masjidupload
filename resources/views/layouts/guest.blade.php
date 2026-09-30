@@ -58,6 +58,8 @@
                 <div class="w-full max-w-md ui-card p-6 sm:p-8">
                     {{ $slot }}
                 </div>
+
+                @include('partials.copyright', ['class' => 'mt-6 text-center'])
             </div>
         </div>
     </body>

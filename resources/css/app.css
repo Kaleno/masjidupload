@@ -138,6 +138,36 @@
         @apply ui-card overflow-hidden;
     }
 
+    .ui-scroll {
+        max-height: 70vh;
+        max-height: 70dvh;
+        overflow: auto;
+        scrollbar-width: thin;
+    }
+
+    .ui-scroll-list {
+        @apply -m-1 p-1;
+        max-height: 70vh;
+        max-height: 70dvh;
+        overflow-x: hidden;
+        overflow-y: auto;
+        scrollbar-width: thin;
+    }
+
+    .ui-scroll-sm {
+        @apply max-h-64 pr-1;
+        overflow-y: auto;
+        scrollbar-width: thin;
+    }
+
+    .ui-scroll .ui-table thead th {
+        @apply sticky top-0 z-20 bg-cream-100;
+    }
+
+    .ui-scroll .ui-table thead th.left-0 {
+        @apply z-30;
+    }
+
     .ui-table {
         @apply min-w-full text-sm;
     }

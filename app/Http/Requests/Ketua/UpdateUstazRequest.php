@@ -5,6 +5,7 @@ namespace App\Http\Requests\Ketua;
 use App\Enums\EducationLevel;
 use App\Models\User;
 use App\Support\Role;
+use App\Support\WhatsApp;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -12,6 +13,11 @@ use Illuminate\Validation\Rules\Password;
 
 class UpdateUstazRequest extends FormRequest
 {
+    protected function prepareForValidation(): void
+    {
+        $this->merge(['phone' => WhatsApp::normalize($this->input('phone'))]);
+    }
+
     public function authorize(): bool
     {
         return $this->user()?->can('manage-master') ?? false;
@@ -31,13 +37,23 @@ class UpdateUstazRequest extends FormRequest
             'nip' => ['required', 'string', 'max:50', Rule::unique(User::class, 'nip')->ignore($ustaz->id)],
             'username' => ['required', 'string', 'max:50', 'alpha_dash', Rule::unique(User::class)->ignore($ustaz)],
             'email' => ['nullable', 'email', 'max:255', Rule::unique(User::class)->ignore($ustaz)],
-            'phone' => ['nullable', 'string', 'max:30'],
+            'phone' => ['nullable', 'string', 'regex:/^628\d{7,12}$/'],
             'birth_date' => ['nullable', 'date'],
             'address' => ['nullable', 'string', 'max:1000'],
             'education_level' => ['nullable', Rule::enum(EducationLevel::class)],
             'is_active' => ['required', 'boolean'],
             'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'password' => ['nullable', 'confirmed', Password::defaults()],
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'phone.regex' => 'Nomor WhatsApp tidak valid. Contoh: 081234567890 atau 6281234567890.',
         ];
     }
 }

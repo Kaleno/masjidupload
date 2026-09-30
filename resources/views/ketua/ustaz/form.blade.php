@@ -60,9 +60,32 @@
             <x-input-error class="mt-2" :messages="$errors->get('address')" />
         </div>
 
-        <div>
-            <x-input-label for="phone" value="Nomor telepon" />
-            <x-text-input id="phone" name="phone" class="mt-1.5" :value="old('phone', $ustaz?->phone)" />
+        <div x-data="{
+                phone: @js(old('phone', $ustaz?->phone) ?? ''),
+                get wa() {
+                    let d = this.phone.replace(/\D+/g, '');
+                    if (d.startsWith('0')) d = '62' + d.slice(1);
+                    else if (d.startsWith('8')) d = '62' + d;
+                    return /^628\d{7,12}$/.test(d) ? d : '';
+                }
+            }">
+            <x-input-label for="phone" value="Nomor WhatsApp" />
+            <x-text-input id="phone" name="phone" type="tel" inputmode="tel" class="mt-1.5" x-model="phone" placeholder="081234567890" />
+            <p class="mt-1.5 text-xs text-slate-500">
+                Boleh ditulis 0812…, 62812…, +62 812…, atau tempel link https://wa.me/62…. Otomatis disimpan sebagai 62812… supaya santri bisa langsung chat.
+            </p>
+            <p class="mt-1 text-xs" x-show="phone.trim() !== ''" x-cloak>
+                <template x-if="wa">
+                    <span class="text-teal-800">
+                        Link: <span class="font-mono" x-text="'https://wa.me/' + wa"></span>
+                        · <a :href="'https://wa.me/' + wa" target="_blank" rel="noopener" class="font-semibold underline">Tes WhatsApp</a>
+                    </span>
+                </template>
+                <template x-if="! wa">
+                    <span class="text-rose-700">Format nomor belum benar.</span>
+                </template>
+            </p>
+            <x-input-error class="mt-2" :messages="$errors->get('phone')" />
         </div>
 
         <div>

@@ -13,12 +13,16 @@
             ['label' => 'Absensi', 'route' => 'ops.attendance.index', 'match' => 'ops.attendance.*', 'icon' => 'check-circle', 'group' => 'Operasional', 'primary' => true],
             ['label' => 'Setoran', 'route' => 'ops.setoran.index', 'match' => 'ops.setoran.*', 'icon' => 'book', 'group' => 'Operasional', 'primary' => true],
             ['label' => 'SPP', 'route' => 'ops.spp.index', 'match' => 'ops.spp.*', 'icon' => 'cash', 'group' => 'Operasional', 'primary' => false],
+            ['label' => 'Pengajuan izin', 'route' => 'ops.absence-requests.index', 'match' => 'ops.absence-requests.*', 'icon' => 'user', 'group' => 'Operasional', 'primary' => false],
+            ['label' => 'Jadwal libur', 'route' => 'ketua.holidays.index', 'match' => 'ketua.holidays.*', 'icon' => 'alert', 'group' => 'Penjadwalan', 'primary' => false],
+            ['label' => 'Jadwal pengajar', 'route' => 'ketua.teacher-schedules.index', 'match' => 'ketua.teacher-schedules.*', 'icon' => 'calendar', 'group' => 'Penjadwalan', 'primary' => false],
             ['label' => 'Progress', 'route' => 'laporan.progress.index', 'match' => 'laporan.progress.*', 'icon' => 'chart', 'group' => 'Laporan', 'primary' => false],
             ['label' => 'Rekap', 'route' => 'laporan.attendance.index', 'match' => 'laporan.attendance.*', 'icon' => 'clipboard', 'group' => 'Laporan', 'primary' => false],
+            ['label' => 'Laporan SPP', 'route' => 'laporan.spp.index', 'match' => 'laporan.spp.*', 'icon' => 'cash', 'group' => 'Laporan', 'primary' => false],
+            ['label' => 'Laporan absensi', 'route' => 'laporan.absensi.index', 'match' => 'laporan.absensi.*', 'icon' => 'check-circle', 'group' => 'Laporan', 'primary' => false],
             ['label' => 'Pengajar', 'route' => 'ketua.ustaz.index', 'match' => 'ketua.ustaz.*', 'icon' => 'academic', 'group' => 'Master data', 'primary' => false],
             ['label' => 'Santri', 'route' => 'ketua.santri.index', 'match' => 'ketua.santri.*', 'icon' => 'users', 'group' => 'Master data', 'primary' => false],
             ['label' => 'Daftar', 'route' => 'ketua.registrations.index', 'match' => 'ketua.registrations.*', 'icon' => 'spark', 'group' => 'Master data', 'primary' => false],
-            ['label' => 'Libur', 'route' => 'ketua.holidays.index', 'match' => 'ketua.holidays.*', 'icon' => 'alert', 'group' => 'Master data', 'primary' => false],
             ['label' => 'Kas', 'route' => 'ketua.finance.index', 'match' => 'ketua.finance.*', 'icon' => 'cash', 'group' => 'Keuangan', 'primary' => false],
             ['label' => 'Log audit', 'route' => 'ketua.audit.index', 'match' => 'ketua.audit.*', 'icon' => 'clipboard', 'group' => 'Laporan', 'primary' => false],
         ];
@@ -28,9 +32,13 @@
             ['label' => 'Absensi', 'route' => 'ops.attendance.index', 'match' => 'ops.attendance.*', 'icon' => 'check-circle', 'group' => 'Operasional', 'primary' => true],
             ['label' => 'Setoran', 'route' => 'ops.setoran.index', 'match' => 'ops.setoran.*', 'icon' => 'book', 'group' => 'Operasional', 'primary' => true],
             ['label' => 'SPP', 'route' => 'ops.spp.index', 'match' => 'ops.spp.*', 'icon' => 'cash', 'group' => 'Operasional', 'primary' => false],
+            ['label' => 'Pengajuan izin', 'route' => 'ops.absence-requests.index', 'match' => 'ops.absence-requests.*', 'icon' => 'user', 'group' => 'Operasional', 'primary' => false],
+            ['label' => 'Jadwal libur', 'route' => 'ketua.holidays.index', 'match' => 'ketua.holidays.*', 'icon' => 'alert', 'group' => 'Penjadwalan', 'primary' => false],
+            ['label' => 'Jadwal pengajar', 'route' => 'ketua.teacher-schedules.index', 'match' => 'ketua.teacher-schedules.*', 'icon' => 'calendar', 'group' => 'Penjadwalan', 'primary' => false],
             ['label' => 'Progress', 'route' => 'laporan.progress.index', 'match' => 'laporan.progress.*', 'icon' => 'chart', 'group' => 'Laporan', 'primary' => false],
             ['label' => 'Rekap', 'route' => 'laporan.attendance.index', 'match' => 'laporan.attendance.*', 'icon' => 'clipboard', 'group' => 'Laporan', 'primary' => false],
-            ['label' => 'Libur', 'route' => 'ketua.holidays.index', 'match' => 'ketua.holidays.*', 'icon' => 'alert', 'group' => 'Master data', 'primary' => false],
+            ['label' => 'Laporan SPP', 'route' => 'laporan.spp.index', 'match' => 'laporan.spp.*', 'icon' => 'cash', 'group' => 'Laporan', 'primary' => false],
+            ['label' => 'Laporan absensi', 'route' => 'laporan.absensi.index', 'match' => 'laporan.absensi.*', 'icon' => 'check-circle', 'group' => 'Laporan', 'primary' => false],
         ];
     } elseif ($user->hasRole(\App\Support\Role::Pengajar)) {
         $links = [
@@ -39,11 +47,14 @@
             ['label' => 'Setoran', 'route' => 'ops.setoran.index', 'match' => 'ops.setoran.*', 'icon' => 'book', 'group' => 'Operasional', 'primary' => true],
             ['label' => 'Progress', 'route' => 'laporan.progress.index', 'match' => 'laporan.progress.*', 'icon' => 'chart', 'group' => 'Laporan', 'primary' => false],
             ['label' => 'Rekap', 'route' => 'laporan.attendance.index', 'match' => 'laporan.attendance.*', 'icon' => 'clipboard', 'group' => 'Laporan', 'primary' => false],
+            ['label' => 'Laporan absensi', 'route' => 'laporan.absensi.index', 'match' => 'laporan.absensi.*', 'icon' => 'check-circle', 'group' => 'Laporan', 'primary' => false],
         ];
     } elseif ($user->hasRole(\App\Support\Role::Santri)) {
         $links = [
             ['label' => 'Beranda', 'route' => 'portal.home', 'match' => 'portal.home', 'icon' => 'home', 'group' => 'Utama', 'primary' => true],
-            ['label' => 'Profil', 'route' => 'portal.profile.edit', 'match' => 'portal.profile.*', 'icon' => 'user', 'group' => 'Utama', 'primary' => true],
+            ['label' => 'Jadwal', 'route' => 'portal.schedule', 'match' => 'portal.schedule', 'icon' => 'calendar', 'group' => 'Utama', 'primary' => true],
+            ['label' => 'Izin', 'route' => 'portal.absence-requests.index', 'match' => 'portal.absence-requests.*', 'icon' => 'clipboard', 'group' => 'Utama', 'primary' => true],
+            ['label' => 'Profil', 'route' => 'portal.profile.edit', 'match' => 'portal.profile.*', 'icon' => 'user', 'group' => 'Utama', 'primary' => false],
         ];
     } else {
         $links = [

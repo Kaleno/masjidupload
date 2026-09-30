@@ -112,7 +112,7 @@
                     <x-primary-button class="btn-block min-h-12">Simpan bayar</x-primary-button>
                 </form>
 
-                <section class="space-y-3">
+                <section x-data="searchList" class="space-y-3">
                     <div class="flex flex-wrap items-center justify-between gap-2">
                         <h2 class="ui-section-title">
                             @if ($filter === 'nunggak')
@@ -125,8 +125,10 @@
                             <a href="{{ route('ops.spp.index', ['year' => $year, 'month' => $month]) }}" class="btn-ghost text-xs">Semua tunggakan</a>
                         @endif
                     </div>
+                    <x-list-search />
+                    <div class="ui-scroll-list space-y-3">
                     @forelse ($tunggakan as $santri)
-                        <div class="ui-card flex items-start justify-between gap-3 p-4">
+                        <div class="ui-card flex items-start justify-between gap-3 p-4" data-search="{{ str($santri->user->name.' '.$santri->nis)->lower() }}">
                             <div>
                                 <p class="font-medium text-teal-950">{{ $santri->user->name }}</p>
                                 <p class="text-xs text-slate-500">NIS {{ $santri->nis }}</p>
@@ -148,10 +150,11 @@
                             @endif
                         </x-empty>
                     @endforelse
+                    </div>
                 </section>
             </div>
 
-            <section class="space-y-3">
+            <section x-data="searchList" class="space-y-3">
                 <h2 class="ui-section-title">Riwayat pembayaran</h2>
                 <form method="GET" class="flex flex-wrap gap-2">
                     <select name="month" class="ui-select flex-1 min-w-[8rem]">
@@ -165,8 +168,10 @@
                     @endif
                     <button class="btn-secondary">Lihat</button>
                 </form>
+                <x-list-search />
+                <div class="ui-scroll-list space-y-3">
                 @forelse ($history as $row)
-                    <div class="ui-card flex items-start justify-between gap-3 p-4">
+                    <div class="ui-card flex items-start justify-between gap-3 p-4" data-search="{{ str(($row['santri']?->user->name ?? '').' '.($row['santri']?->nis ?? ''))->lower() }}" data-search-key="{{ $loop->index }}">
                         <div>
                             <p class="font-medium text-teal-950">{{ $row['santri']?->user->name ?? '—' }}</p>
                             <p class="text-xs text-slate-500">
@@ -187,6 +192,7 @@
                 @empty
                     <x-empty>Tidak ada pembayaran.</x-empty>
                 @endforelse
+                </div>
             </section>
         </div>
     </div>

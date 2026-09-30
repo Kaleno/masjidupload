@@ -84,7 +84,7 @@
             @endforeach
         </div>
 
-        <div class="space-y-2">
+        <div class="ui-scroll-list space-y-2">
             @forelse ($entries as $entry)
                 <div class="ui-card flex items-start justify-between gap-3 p-4">
                     <div class="min-w-0">

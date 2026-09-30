@@ -35,8 +35,11 @@
             <button class="btn-secondary w-full sm:w-auto">Filter</button>
         </form>
 
+        <div x-data="searchList" class="space-y-3">
+        <x-list-search />
+
         <div class="ui-table-wrap">
-            <div class="overflow-x-auto">
+            <div class="ui-scroll">
                 <table class="ui-table ui-table-stack">
                     <thead>
                         <tr>
@@ -49,7 +52,7 @@
                     </thead>
                     <tbody>
                         @forelse ($santriList as $santri)
-                            <tr>
+                            <tr data-search="{{ str($santri->user->name.' '.$santri->nis)->lower() }}">
                                 <td data-label="NIS" class="font-medium">{{ $santri->nis }}</td>
                                 <td data-label="Nama">
                                     <div class="ui-table-value">
@@ -121,6 +124,7 @@
                     </tbody>
                 </table>
             </div>
+        </div>
         </div>
 
         <div
